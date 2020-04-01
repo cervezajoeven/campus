@@ -23,3 +23,5 @@ application/logs/*
 /resources/uploads/lessons
 /resources/uploads/optical
 /resources/uploads/profile
+error_log
+readme.rst
