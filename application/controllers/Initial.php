@@ -1,16 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Initial extends BEN_General {
+class Initial extends CI_Controller {
 
 	function __construct() {
+		parent::__construct();
+		$this->load->helper('url');
 
-       	parent::__construct();
-       	$this->view_folder = "general/home";
    	}	
 
 	public function index(){
-		$this->ben_redirect("general/home/index");
+
+		redirect("version_1/general/home/index");
 	}
 
 }
