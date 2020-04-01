@@ -30,7 +30,6 @@
                         <input type="text" class="title" placeholder="Lesson Name Here..." value="<?php echo $data['blackboard']['lesson_name']?>" name="">
                         
                     </div>
-
                     <div class="folders_container">
                         <div class="folder folder_active">
                             <!-- <input type="text" placeholder="Engage" value="Engage" name=""> -->

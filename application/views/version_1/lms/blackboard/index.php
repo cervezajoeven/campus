@@ -42,7 +42,7 @@
                     </div>
                     
                     <a href="<?php echo $general_class->ben_link('lms/blackboard/save');?>"><button class="form-control btn btn-success waves-effect" type="button">Create New</button></a>
-                        
+                    
                 </div>
             </form>
         </div>
