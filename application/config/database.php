@@ -95,28 +95,6 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-// $db['online'] = array(
-// 	'dsn'	=> '',
-// 	'hostname' => '166.62.10.190',
-// 	'username' => 'joeven',
-// 	'password' => 'Joeven241',
-// 	'database' => 'sanisidro',
-// 	'dbdriver' => 'mysqli',
-// 	'dbprefix' => '',
-// 	'pconnect' => FALSE,
-// 	'db_debug' => (ENVIRONMENT !== 'development'),
-// 	'cache_on' => FALSE,
-// 	'cachedir' => '',
-// 	'char_set' => 'utf8',
-// 	'dbcollat' => 'utf8_general_ci',
-// 	'swap_pre' => '',
-// 	'encrypt' => FALSE,
-// 	'compress' => FALSE,
-// 	'stricton' => FALSE,
-// 	'failover' => array(),
-// 	'save_queries' => TRUE
-// );
-
 $db['online'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
@@ -139,27 +117,6 @@ $db['online'] = array(
 	'save_queries' => TRUE
 );
 
-$db['dhan'] = array(
-	'dsn'	=> '',
-	'hostname' => '166.62.28.86',
-	'username' => 'joeven',	
-	'password' => 'joeven241',
-	'database' => 'cms',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'development'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
 
 $db['offline'] = array(
 	'dsn'	=> '',
