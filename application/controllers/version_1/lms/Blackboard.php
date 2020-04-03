@@ -74,7 +74,7 @@ class Blackboard extends BEN_General {
                 $download_data['file_type'] = "image";
                 $download_data['content_id'] = $value['content']['result_id'];
                 $download_data['url'] = urldecode($value['content']['image']);
-                $download_data['output_path'] = "C:\\xampp\htdocs\cms\\resources\uploads\blackboard\\".$data['id']."\\thumbnails\\";
+                $download_data['output_path'] = "C:\\xampp\htdocs\campus\\resources\uploads\blackboard\\".$data['id']."\\thumbnails\\";
                 $type = $this->check_url_type($value['content']['image']);
                 $download_data['filename'] = $value['content']['result_id'];
                 $download_data['completed'] = 0;
@@ -101,7 +101,7 @@ class Blackboard extends BEN_General {
 
             if(!in_array($value['content']['result_id'], $contents)){
 
-                $download_data['output_path'] = "C:\\xampp\htdocs\cms\\resources\uploads\blackboard\\".$data['id']."\\contents\\";
+                $download_data['output_path'] = "C:\\xampp\htdocs\campus\\resources\uploads\blackboard\\".$data['id']."\\contents\\";
                 $download_data['filename'] = $value['content']['result_id'];
                 $download_data['table_id'] = $data['id'];
                 $download_data['content_id'] = $value['content']['result_id'];
