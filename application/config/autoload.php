@@ -132,4 +132,18 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$general = "version_1/general/";
+$autoload['model'] = array(
+	$general.'company_model',
+	$general.'crud_model',
+	$general.'account_type_model',
+	$general.'account_model',
+	$general.'profile_model',
+	$general.'schoolyear_model',
+	$general.'subject_model',
+	$general.'section_model',
+	$general.'grade_model',
+	$general.'school_status_model',
+	$general.'banner_model',
+	$general.'announcement_model',
+);

@@ -145,26 +145,28 @@ class Blackboard extends BEN_General {
             $thumbnail_directory = FCPATH."resources/uploads/blackboard/".$blackboard_id."/";
             $thumbnail_link_directory = base_url('resources/uploads/blackboard/'.$blackboard_id.'/');
             $existed = [];
-
+            // print_r($data);
             foreach ($data as $key => $value) {
                 
                 
                 if(!strpos($value['image'],"campuscloudph")&&!strpos($value['image'],"localhost")){
-                    
-
-                    $type = $this->check_url_type($value['image']);
-
                     $thumbnail_file_directory = $thumbnail_directory."thumbnails/".$value['result_id'].".jpg";
 
                     if(file_exists($thumbnail_file_directory)){
                         $thumbnail_link = $thumbnail_link_directory."thumbnails/".$value['result_id'].".jpg";
-                        $exists = array('key'=>$value['key'],'offline_thumbnail'=>$thumbnail_link);
+                        $exists = array('key'=>$value['result_id'],'offline_thumbnail'=>$thumbnail_link);
                         array_push($existed, $exists);
+                    }else{
+                        $thumbnail_link = $value['image'];
+                        $exists = array('key'=>$value['result_id'],'offline_thumbnail'=>$thumbnail_link);
+                        array_push($existed, $exists);
+                        
                     }
                 }
                 
                 
             }
+
             echo json_encode($existed);
         }else{
             echo "empty";
@@ -186,21 +188,28 @@ class Blackboard extends BEN_General {
             foreach ($data as $key => $value) {
                 
                 if(!strpos($value['data']['content']['source'],"campuscloudph")&&!strpos($value['data']['content']['source'],"localhost")){
+
                     $old_type = $value['data']['content']['type'];
+                    $file_directory = $directory.$value['data']['content']['result_id'];
+                    $link = $link_directory.$value['data']['content']['result_id'];
+                    $the_filename = $value['data']['content']['result_id'];
+
                     if($value['data']['content']['type']=="website"||$value['data']['content']['type']=="pdf"){
 
-                        $file_directory = $directory.$value['data']['content']['result_id'].".pdf";
-                        $link = $link_directory.$value['data']['content']['result_id'].".pdf";
+                        $file_directory = $file_directory.".pdf";
+                        $link = $link.".pdf";
+                        $the_filename = $the_filename.".pdf";
                         $type = "pdf";
 
-                    }elseif($value['data']['content']['type']=="youtube"||$value['data']['content']['type']=="mp4"){
-                        $file_directory = $directory.$value['data']['content']['result_id'].".mp4";
-                        $link = $link_directory.$value['data']['content']['result_id'].".mp4";
+                    }elseif($value['data']['content']['type']=="youtube"||$value['data']['content']['type']=="video"){
+                        $file_directory = $file_directory.".mp4";
+                        $link = $link.".mp4";
+                        $the_filename = $the_filename.".mp4";
                         $type = "video";
                     }elseif($value['data']['content']['type']=="image"){
-                        $extension = $this->check_url_type($value['data']['content']['source']);
-                        $file_directory = $directory.$value['data']['content']['result_id'].".jpg";
-                        $link = $link_directory.$value['data']['content']['result_id'].".jpg";
+                        $file_directory = $file_directory.".jpg";
+                        $link = $link.".jpg";
+                        $the_filename = $the_filename.".jpg";
                         $type = "image";
                     }
                     if(file_exists($file_directory)){

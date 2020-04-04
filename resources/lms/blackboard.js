@@ -388,13 +388,15 @@ $(document).ready(function(){
                         result_pool.forEach(function(item, index, arr){
                             if(result_id==item.result_id){
                                 item.status = "fresh";
+                                item.state = "online";
+                                item.blackboard_id = blackboard_id;
                                 var folder_id = ui.item.parent().attr("id");
                                 var content = {folder_id:folder_id,content:item}
                                 content_pool.push(content);
                             }
                         });
 
-                    }
+                    } 
                     
                 }
                 sort_content_order();
@@ -649,7 +651,7 @@ $(document).ready(function(){
         $(document).find(".content_already");
         var check_data = [];
         $.each(content_pool,function(key,value){
-            check_data.push({key:key,data:value});
+            check_data.push({key:value.content.result_id,data:value});
         });
         $.ajax({
             url: url+'check_offline_files',
@@ -665,24 +667,30 @@ $(document).ready(function(){
 
                     $.each(parsed_data,function(parsed_data_key,parsed_data_value){
                         
-                        // console.log(parsed_data_value.key);
-                        content_pool[parsed_data_value.key].content.source = parsed_data_value.source;
-                        content_pool[parsed_data_value.key].content.type = parsed_data_value.type;
-                        content_pool[parsed_data_value.key].content.status = parsed_data_value.status;
-                        var the_li = $("li[result_id='"+content_pool[parsed_data_value.key].content.result_id+"']");
-                        if(parsed_data_value.status == "checking"){
-                            the_li.find(".download_status_container").css("background-color","#427fed");
-                            the_li.find(".download_status_container").find("span").text("Checking...");
-                        }else if(parsed_data_value.status == "completed"){
-                            the_li.find(".download_status_container").css("background-color","green");
-                            the_li.find(".download_status_container").find("span").text("O2O Available");
-                        }else if(parsed_data_value.status == "downloading"){
-                            the_li.find(".download_status_container").css("background-color","#e228ba");
-                            the_li.find(".download_status_container").find("span").text("O2O In Progress");
-                        }else if(parsed_data_value.status == "not_downloadable"){
-                            the_li.find(".download_status_container").css("background-color","#427fed");
-                            the_li.find(".download_status_container").find("span").text("Available Online");
-                        }
+
+                        $.each(content_pool,function(content_pool_key,content_pool_value){
+
+                            if(content_pool_value.content.result_id == parsed_data_value.key){
+                                content_pool[parsed_data_key].content.source = parsed_data_value.source;
+                                content_pool[parsed_data_key].content.type = parsed_data_value.type;
+                                content_pool[parsed_data_key].content.status = parsed_data_value.status;
+                                var the_li = $("li[result_id='"+content_pool[parsed_data_key].content.result_id+"']");
+                                if(parsed_data_value.status == "checking"){
+                                    the_li.find(".download_status_container").css("background-color","#427fed");
+                                    the_li.find(".download_status_container").find("span").text("Checking...");
+                                }else if(parsed_data_value.status == "completed"){
+                                    the_li.find(".download_status_container").css("background-color","green");
+                                    the_li.find(".download_status_container").find("span").text("O2O Available");
+                                }else if(parsed_data_value.status == "downloading"){
+                                    the_li.find(".download_status_container").css("background-color","#e228ba");
+                                    the_li.find(".download_status_container").find("span").text("O2O In Progress");
+                                }else if(parsed_data_value.status == "not_downloadable"){
+                                    the_li.find(".download_status_container").css("background-color","#427fed");
+                                    the_li.find(".download_status_container").find("span").text("Available Online");
+                                }
+                            }
+                        });
+                        
 
                         
                     });
@@ -704,6 +712,7 @@ $(document).ready(function(){
         $.each(content_pool,function(key,value){
             check_data.push({key:key,result_id:value.content.result_id,image:value.content.image,type:value.content.type});
         });
+
         $.ajax({
             url: url+'check_thumbnail',
             method:"POST",
@@ -715,8 +724,12 @@ $(document).ready(function(){
                 if(parsed_data.length){
                     
                     $.each(parsed_data,function(parsed_data_key,parsed_data_value){
-                    
-                        content_pool[parsed_data_value.key].content.image = encodeURIComponent(parsed_data_value.offline_thumbnail);
+                        $.each(content_pool,function(content_pool_key,content_pool_value){
+                            if(parsed_data_value.key == content_pool_value.content.result_id){
+                                content_pool[parsed_data_key].content.image = encodeURIComponent(parsed_data_value.offline_thumbnail);
+                            }
+
+                        });
                     });
                     change_detected();
                 }else{

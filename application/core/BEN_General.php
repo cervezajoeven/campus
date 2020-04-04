@@ -44,8 +44,6 @@ class BEN_General extends CI_Controller {
 		    $this->load->database('offline');
 		}elseif(strpos($url,'192.') !== false||strpos($url,'172.') !== false) {
 			$this->load->database('offline');
-		}elseif(strpos($url,'joeven') !== false) {
-		    $this->load->database('offline');
 		}else{
 			$this->load->database('online');
 		}
@@ -53,42 +51,11 @@ class BEN_General extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->library('form_validation');
 		$this->load->library('session');
-		$this->ben_models();
 		$this->ben_check_session();
 		$this->ben_check_permission();
 	}
 	public function helpers(){
 		$this->load->helper('version_'.$this->app_version.'/general/general');
-	}
-	public function ben_models(){
-		$this->load->model("version_".$this->app_version.'/general/'.'company_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'crud_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'account_type_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'account_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'profile_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'schoolyear_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'subject_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'section_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'grade_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'school_status_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'banner_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'announcement_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'memo_model');
-		$this->load->model("version_".$this->app_version.'/general/'.'navigation_model');
-
-		// LMS Models
-		$this->load->model("version_".$this->app_version.'/lms/'.'lesson_model');
-		$this->load->model("version_".$this->app_version.'/lms/'.'question_model');
-		$this->load->model("version_".$this->app_version.'/lms/'.'quiz_model');
-		$this->load->model("version_".$this->app_version.'/lms/'.'quiz_part_model');
-		$this->load->model("version_".$this->app_version.'/lms/'.'lesson_assign_model');
-		$this->load->model("version_".$this->app_version.'/lms/'.'answer_sheet_model');
-		// LMS Models
-
-		// SMS Models
-		$this->load->model("version_".$this->app_version.'/sms/'.'grading_model');
-		// SMS Models
-
 	}
 	public function ben_check_session(){
 
@@ -106,13 +73,10 @@ class BEN_General extends CI_Controller {
    		}   		
    		if(!$this->session->has_userdata('username')){
 			if(!in_array($current_function, $excluded)){
-				//$this->ben_notify(array(array("warning","You need to login first.")));
-                // $this->session->set_flashdata('wrong_credentials',"Incorrect Username or Password");
 				$this->ben_redirect("general/home/index");
 			}
 		}else{
 			if(in_array($current_function, $excluded)){
-//				$this->ben_notify(array(array("info","Please logout first.")));
 				$this->ben_redirect("general/dashboard/sms_index");
 			}
 		}
