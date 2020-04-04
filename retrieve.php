@@ -323,11 +323,11 @@ if(!empty($online_fetch)){
 
 
 ?>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(function(){
 		setInterval(function() {
 	      	location.reload();
 	    }, 3000);
 		
 	});
-</script>
+</script> -->

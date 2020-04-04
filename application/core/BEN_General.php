@@ -14,7 +14,7 @@ class BEN_General extends CI_Controller {
 	public $toggled = array();
 	public $data;
 	public $mode = "";
-	public $excluded = array("general/home/index","general/login/login","general/login/index","general/home/about_us","general/home/index_parallax","sms/grading_api/api_test","sms/grading_api/save_deportment","sms/grading_api/save_attendance","sms/grading_api/save_tardiness","sms/grading_api/save_grades","general/synchronization/index");
+	public $excluded = array("general/home/index","general/login/login","general/login/index","general/home/about_us","general/home/index_parallax","sms/grading_api/api_test","sms/grading_api/save_deportment","sms/grading_api/save_attendance","sms/grading_api/save_tardiness","sms/grading_api/save_grades","general/synchronization/index","general/online_offline/index","general/online_offline/get_online_ids");
 
 	public $notification;
 	
