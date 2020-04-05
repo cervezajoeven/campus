@@ -76,25 +76,25 @@ class Online_offline extends BEN_General {
             //fetch from offline for new online data
             $offline_data = $this->get_offline_data($this->password,$table_value,$new_offline);
 
-            $new_online = json_encode(array("data" => $new_online));
+            $new_online_json = json_encode(array("data" => $new_online));
             $get_online_data = $this->online_link."get_online_data/".$this->password."/".$table_value;
             $ch = curl_init($get_online_data);
-            // Attach encoded JSON string to the POST fields
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $new_online);
-
-            // Set the content type to application/json
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-
-            // Return response instead of outputting
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            // Execute the POST request
+            curl_setopt($ch,CURLOPT_POST, count($new_online));
+            curl_setopt($ch,CURLOPT_POSTFIELDS, $new_online_json);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                 
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+             
+            // Set HTTP Header for POST request 
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($new_online_json))
+            );
             $result = curl_exec($ch);
 
             // Close cURL resource
             curl_close($ch);
 
-            print_r($get_online_data);
+            print_r($result);
 
            
 
