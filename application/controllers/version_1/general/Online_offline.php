@@ -66,29 +66,35 @@ class Online_offline extends BEN_General {
                     array_push($new_offline, $list_value);
                 }
             }
-            $new_online['ids'] = [];
+            $new_online = [];
             foreach ($online_list as $list_key => $list_value) {
                 if(!in_array($list_value, $offline_list)){
-                    array_push($new_online['ids'], $list_value);
+                    array_push($new_online, $list_value);
                 }
             }
 
             //fetch from offline for new online data
             $offline_data = $this->get_offline_data($this->password,$table_value,$new_offline);
+
+            $new_online = json_encode(array("data" => $new_online));
             $get_online_data = $this->online_link."get_online_data/".$this->password."/".$table_value;
             $ch = curl_init($get_online_data);
+            // Attach encoded JSON string to the POST fields
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $new_online);
+
+            // Set the content type to application/json
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+
+            // Return response instead of outputting
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($new_online));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen(json_encode($new_online)))
-            );
-            $online_data = curl_exec($ch);
+
+            // Execute the POST request
+            $result = curl_exec($ch);
+
+            // Close cURL resource
             curl_close($ch);
 
-            print_r($online_data);
+            print_r($new_online);
 
            
 
@@ -124,7 +130,8 @@ class Online_offline extends BEN_General {
     public function get_online_data($password="",$table=""){
         $this->check_password($password);
         $return = [];
-        return json_encode($_REQUEST);
+        echo json_encode($_POST);
+        return json_encode($_POST);
         // foreach ($ids as $key => $value) {
         //     array_push($return, $this->online_offline_model->get_data($table,$value)[0]);
         // }
