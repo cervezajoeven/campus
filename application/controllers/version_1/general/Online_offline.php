@@ -66,10 +66,10 @@ class Online_offline extends BEN_General {
                     array_push($new_offline, $list_value);
                 }
             }
-            $new_online = [];
+            $new_online['ids'] = [];
             foreach ($online_list as $list_key => $list_value) {
                 if(!in_array($list_value, $offline_list)){
-                    array_push($new_online, $list_value);
+                    array_push($new_online['ids'], $list_value);
                 }
             }
 
@@ -77,13 +77,15 @@ class Online_offline extends BEN_General {
             $offline_data = $this->get_offline_data($this->password,$table_value,$new_offline);
             $get_online_data = $this->online_link."get_online_data/".$this->password."/".$table_value;
             $ch = curl_init($get_online_data);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            curl_setopt($ch, CURLOPT_POSTREDIR, 3);                                                                  
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);                              
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+            curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($new_online));
-            $online_data = json_decode(curl_exec($ch));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen(json_encode($new_online)))
+            );
+            $online_data = curl_exec($ch);
             curl_close($ch);
 
             print_r($online_data);
@@ -122,7 +124,7 @@ class Online_offline extends BEN_General {
     public function get_online_data($password="",$table=""){
         $this->check_password($password);
         $return = [];
-        echo json_encode($_REQUEST);
+        return json_encode($_REQUEST);
         // foreach ($ids as $key => $value) {
         //     array_push($return, $this->online_offline_model->get_data($table,$value)[0]);
         // }
