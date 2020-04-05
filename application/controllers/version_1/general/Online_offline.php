@@ -94,7 +94,7 @@ class Online_offline extends BEN_General {
             // Close cURL resource
             curl_close($ch);
 
-            print_r($new_online);
+            print_r($get_online_data);
 
            
 
